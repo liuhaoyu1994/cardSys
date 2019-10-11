@@ -1,0 +1,3 @@
+*.vs
+*.git
+node_modules
