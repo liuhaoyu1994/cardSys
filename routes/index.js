@@ -7,6 +7,7 @@ router.get('/', function(req, res, next) {
   const timestamp = req.query.timestamp;
   const nonce = req.query.nonce;
   const token = '2333';
+  const reply = req.query.echostr;
 
   var arr = [timestamp,nonce,token]
   arr.sort();
@@ -15,7 +16,7 @@ router.get('/', function(req, res, next) {
   const hashCode = crypto.createHash('sha1');
   var result = hashCode.update(tempStr,'utf8').digest('hex');
   if(result === signature){
-    res.send('Yeee');
+    res.send(reply);
   } else {
     res.send('not Match')
   }
