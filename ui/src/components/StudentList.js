@@ -1,10 +1,11 @@
 import React from 'react';
+import StudentItem from './StudentItem'
 
 class StudentList extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      value: null,
+      value: [],
     };
   }
 
@@ -21,7 +22,14 @@ class StudentList extends React.Component {
   render() {
     return (
       <div>
-        <h1> this is headline </h1>
+        <h1> 学生列表 </h1>
+        <div className="container-fluid">
+          <div className="d-flex flex-wrap justify-content-md-between">
+            {this.state.value.map((item,key) => 
+              <StudentItem item={item} key={item.id} />
+            )}
+          </div>
+        </div>
       </div>
     );
   }
