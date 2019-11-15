@@ -3,14 +3,12 @@ import React from 'react';
 class StudentItem extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {
-      
-    }
     this.handleClick = this.handleClick.bind(this);
   }
   handleClick(){
     this.props.emitEvent(this.props.item);
   }
+
   render() {
     return (
       <div className = "card mb-1 mr-2 p-2">        

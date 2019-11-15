@@ -2,6 +2,8 @@ var express = require('express');
 var router = express.Router();
 var db = require('../db.js');
 
+// url/cards/..
+
 /* GET home page. */
 router.get('/', function(req, res, next) {
     var query = 'select Student.*,Card.* from Card left outer join Student on Student.id = Card.studentId';
@@ -21,6 +23,20 @@ router.get('/:id', function(req, res, next) {
         if (err) {
             res.status(400).json({'err': err});
         } else {
+            res.status(200).send({data: result});
+        }
+    })
+    
+});
+
+router.get('/student/:id', function(req, res, next) {
+    var query = 'select Student.*,Card.* from Card left outer join Student on Student.id = Card.studentId where Student.id = ?';
+    db.get(query,[req.params.id], (err, result) => {
+        if (err) {
+            res.status(400).json({'err': err});
+            console.log(err)
+        } else {
+            console.log(result)
             res.status(200).send({data: result});
         }
     })
