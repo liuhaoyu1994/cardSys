@@ -6,7 +6,7 @@ var db = require('../db.js');
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
-    var query = 'select Student.*,Card.* from Card left outer join Student on Student.id = Card.studentId';
+    var query = 'select Student.*,Card.* from Card left join Student on Student.id = Card.studentId';
     db.all(query, (err, result) => {
         if (err) {
             res.status(400).json({'err': err});
@@ -18,7 +18,7 @@ router.get('/', function(req, res, next) {
 });
 
 router.get('/:id', function(req, res, next) {
-    var query = 'select Student.*,Card.* from Card left outer join Student on Student.id = Card.studentId where Card.id = ?';
+    var query = 'select Student.*,Card.* from Card left join Student on Student.id = Card.studentId where Card.id = ?';
     db.get(query,[req.params.id], (err, result) => {
         if (err) {
             res.status(400).json({'err': err});
@@ -30,13 +30,12 @@ router.get('/:id', function(req, res, next) {
 });
 
 router.get('/student/:id', function(req, res, next) {
-    var query = 'select Student.*,Card.* from Card left outer join Student on Student.id = Card.studentId where Student.id = ?';
+    var query = 'select Card.* from Card where Card.id = ?';
     db.get(query,[req.params.id], (err, result) => {
         if (err) {
             res.status(400).json({'err': err});
             console.log(err)
         } else {
-            console.log(result)
             res.status(200).send({data: result});
         }
     })

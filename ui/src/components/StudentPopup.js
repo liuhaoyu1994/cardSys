@@ -4,7 +4,8 @@ class StudentPopup extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      cards: []
+      cards: [],
+      cardInfo:'a'
     };
     this.buyCard = this.buyCard.bind(this);
   }
@@ -20,17 +21,16 @@ class StudentPopup extends React.Component {
 
   
   buyCard(event){
-    //console.log(cardInfo)
-    event.preventDefault();
+    // console.log('cardInfo')
+    // event.preventDefault();
     // var http = new XMLHttpRequest();
     // var url = `http://localhost:3000/cards/add`;
     // var data = JSON.stringify(cardInfo);
     // http.open('POST', url, true);
 
-    // //Send the proper header information along with the request
     // http.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
 
-    // http.onreadystatechange = function() {//Call a function when the state changes.
+    // http.onreadystatechange = function() {
     //     if(http.readyState == 4 && http.status == 200) {
     //         alert(http.responseText);
     //     }
@@ -38,11 +38,11 @@ class StudentPopup extends React.Component {
     // http.send(data);
   }
 
-  componentDidUpdate(prevProps) {
-    if (this.props.item.id !== prevProps.item.id) {
-      this.checkIn(this.props.item.id)
-    }
-  }
+  // componentDidUpdate(prevProps) {
+  //   if (this.props.item.id !== prevProps.item.id) {
+  //     this.checkIn(this.props.item.id)
+  //   }
+  // }
 
   render() {
     return (
@@ -50,9 +50,9 @@ class StudentPopup extends React.Component {
         <div className = "card p-2">
           <img className="card-img-top m-auto" src="thumb.jpg" style={{maxWidth: 150 + 'px'}} alt="photo"></img>
           <div className="card-body">
-            <h5 className="card-title">{this.props.item.name}</h5>
-            <p className="card-text">{this.props.item.wechat}</p>
-            <p className="card-text">{this.props.item.phone}</p>
+            <h5 className="card-title">姓名: {this.props.item.name}</h5>
+            <p className="card-text">微信名: {this.props.item.wechat}</p>
+            <p className="card-text">手机: {this.props.item.phone}</p>
           </div>
           <div className="col-md-12">
             <button type="button" className="btn btn-outline-success col-md-5 mr-1" onClick={this.handleClick}>大课</button>
