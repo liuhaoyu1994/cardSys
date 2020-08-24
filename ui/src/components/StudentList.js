@@ -23,7 +23,7 @@ class StudentList extends React.Component {
   }
 
   componentDidMount() {
-    fetch('http://localhost:4321/')
+    fetch('http://localhost:4321/students')
     .then(res => res.json())
     .then((data) => {
       this.setState({ value: data.data })

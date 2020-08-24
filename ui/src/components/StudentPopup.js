@@ -8,16 +8,20 @@ class StudentPopup extends React.Component {
       cardInfo:'a'
     };
     this.buyCard = this.buyCard.bind(this);
+    this.removeStudent = this.removeStudent.bind(this);
+
   }
 
   checkIn(studentId){
-    fetch(`http://localhost:3000/cards/student/${studentId}`)
+    fetch(`http://localhost:4321/cards/student/${studentId}`)
     .then(res => res.json())
     .then((data) => {
       console.log(data.data)
     })
     .catch(console.log)
   }
+
+
 
   
   buyCard(event){
@@ -44,6 +48,20 @@ class StudentPopup extends React.Component {
   //   }
   // }
 
+  removeStudent() {
+    var http = new XMLHttpRequest();
+    const url = `http://localhost:4321/students/${this.props.item.id}`;    
+
+    http.open('DELETE', url, true);
+    http.setRequestHeader('Content-type', 'application/json');
+    http.onreadystatechange = function() {
+        if(http.readyState == 4 && http.status == 200) {
+            alert(http.responseText);
+        }
+    }
+    http.send();
+  }
+
   render() {
     return (
       <div>
@@ -53,28 +71,15 @@ class StudentPopup extends React.Component {
             <h5 className="card-title">姓名: {this.props.item.name}</h5>
             <p className="card-text">微信名: {this.props.item.wechat}</p>
             <p className="card-text">手机: {this.props.item.phone}</p>
+            <p className="card-text">id: {this.props.item.id}</p>
           </div>
           <div className="col-md-12">
             <button type="button" className="btn btn-outline-success col-md-5 mr-1" onClick={this.handleClick}>大课</button>
             <button type="button" className="btn btn-outline-info col-md-5" onClick={this.handleClick}>私教</button>
+            <button type="button" className="btn btn-outline-danger col-md-5" onClick={this.removeStudent}>删除</button>
           </div>
         </div>
-        <form onSubmit={this.buyCard} className="form-group">
-          <label>
-            种类:
-            <select className="form-control" type="select" name="type">
-              <option value={1}> 大课 </option>
-              <option value={2}> 私教 </option>
-            </select>
-            课程数：
-            <select className="form-control" type="select" name="remain">
-              <option value={6}> 6次 </option>
-              <option value={12}> 12次 </option>
-            </select>
-            <input type="hidden" value={this.props.item.id} />
-          </label>
-          <input type="submit" value="提交" />
-        </form>
+
       </div>
     );
   }

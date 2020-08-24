@@ -28,7 +28,8 @@ router.get('/:id', function(req, res, next) {
 
 router.post('/add', function(req, res, next) {
     var query = 'insert into Student (name, points, wechat, phone) values (?,?,?,?)';
-    var params = [req.body.name, req.body.points, req.body.wechat, req.body.phone];
+    var params = [req.body.name, 0, req.body.wechat, req.body.phone];
+    console.log("req: " + params);
     db.run(query, params,(err, result) => {
         if (err) {
             res.status(400).json({'err': err});

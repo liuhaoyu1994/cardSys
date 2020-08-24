@@ -4,28 +4,37 @@ class StudentRegister extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      studentInfo:{
-        name:'',
-        wechat:'',
-        cellphone:''
-      },
+      name:'',
+      wechat:'',
+      phone:''
     };
+    this.handleInput = this.handleInput.bind(this);
+    this.register = this.register.bind(this);
+
+
   }
 
-  register(studentId){
+  register(){
     var http = new XMLHttpRequest();
-    var url = `http://localhost:3000/students/add`;
-    var data = JSON.stringify(this.state.studentInfo);
+    const url = `http://localhost:4321/students/add`;
+    const studentObj = {name: this.state.name, wechat: this.state.wechat, phone: this.state.phone}
+    
+
     http.open('POST', url, true);
-
-    http.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
-
+    http.setRequestHeader('Content-type', 'application/json');
     http.onreadystatechange = function() {
         if(http.readyState == 4 && http.status == 200) {
             alert(http.responseText);
         }
     }
-    http.send(data);
+    http.send(JSON.stringify(studentObj));
+  }
+
+  handleInput(event) {
+    const target = event.target
+    const name = target.name
+    const value = target.value
+    this.setState({[name]: value});
   }
 
   render() {
@@ -34,31 +43,13 @@ class StudentRegister extends React.Component {
         <div className = "card p-2">
           <img className="card-img-top m-auto" src="thumb.jpg" style={{maxWidth: 150 + 'px'}} alt="photo"></img>
           <div className="card-body">
-            <input className="card-title">姓名: {this.state.studentInfo.name}</input>
-            <p className="card-text">微信名: {this.state.studentInfo.name}</p>
-            <p className="card-text">手机: {this.state.studentInfo.name}</p>
+            姓名:<input type="text" name="name" value={this.state.name} onChange={this.handleInput} />
+            微信名:<input type="text" name="wechat" value={this.state.wechat} onChange={this.handleInput} />
+            手机:<input type="text" name="phone" value={this.state.phone} onChange={this.handleInput} />
           </div>
-          <div className="col-md-12">
-            <button type="button" className="btn btn-outline-success col-md-5 mr-1" onClick={this.handleClick}>大课</button>
-            <button type="button" className="btn btn-outline-info col-md-5" onClick={this.handleClick}>私教</button>
-          </div>
+          <button type="button" className="btn btn-outline-success col-md-5 mr-1" onClick={this.register}>提交</button>
         </div>
-        <form onSubmit={this.buyCard} className="form-group">
-          <label>
-            种类:
-            <select className="form-control" type="select" name="type">
-              <option value={1}> 大课 </option>
-              <option value={2}> 私教 </option>
-            </select>
-            课程数：
-            <select className="form-control" type="select" name="remain">
-              <option value={6}> 6次 </option>
-              <option value={12}> 12次 </option>
-            </select>
-            {/* <input type="hidden" value={this.props.item.id} /> */}
-          </label>
-          <input type="submit" value="提交" />
-        </form>
+        
       </div>
     );
   }
