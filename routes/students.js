@@ -34,7 +34,7 @@ router.post('/add', function(req, res, next) {
         if (err) {
             res.status(400).json({'err': err});
         } else {
-            res.status(200).json({'data': params});
+            res.status(200);
         }
     }) 
 });
@@ -55,11 +55,12 @@ router.put('/:id', function(req, res, next) {
 router.delete('/:id', function(req, res, next) {
     var query = 'delete from Student where id=?';
     var params = [req.params.id];
+    console.log(req.params)
     db.run(query, params,(err, result) => {
         if (err) {
             res.status(400).json({'err': err});
         } else {
-            res.status(200).json({'data': params});
+            res.status(200);
         }
     }) 
 });
