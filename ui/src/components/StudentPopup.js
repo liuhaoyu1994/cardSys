@@ -1,5 +1,4 @@
 import React from 'react';
-const axios = require('axios').default
 
 class StudentPopup extends React.Component {
   constructor(props) {
@@ -46,13 +45,17 @@ class StudentPopup extends React.Component {
   //   }
   // }
 
-  // removeStudent() {
-  //   const url = `http://localhost:4321/students/${this.props.item.id}`;    
-  //   axios.delete(url).then((res)=> {console.log(res)});
-  // }
-
   deactivateStudent() {
-    
+    const url = `http://localhost:4321/students/${this.props.item.id}`;  
+    fetch(url, {
+      method:'DELETE',
+      mode:'cors',
+      headers: {
+        'content-type': 'application/json'
+      },
+    })
+    .then(this.props.refreshStudentList())
+    .catch(console.log)
   }
 
   render() {

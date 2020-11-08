@@ -65,4 +65,20 @@ router.delete('/:id', function(req, res, next) {
     }) 
 });
 
+router.post('/testAPI2', function(req, res, next) {
+    var query = 'insert into Student (name, points, wechat, phone) values (?,?,?,?)';
+    var params = [req.body.name, 0, req.body.wechat, req.body.phone];
+    console.log("req: " + params);
+    res.status(200);
+    db.run(query, params,(err, result) => {
+        if (err) {
+            res.status(400).json({'err': err});
+        } else {
+            res.status(200);
+        }
+    }) 
+  });
+
+
+
 module.exports = router;

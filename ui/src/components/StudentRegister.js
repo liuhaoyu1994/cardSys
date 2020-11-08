@@ -1,4 +1,5 @@
 import React from 'react';
+const axios = require('axios').default
 
 class StudentRegister extends React.Component {
   constructor(props) {
@@ -14,20 +15,28 @@ class StudentRegister extends React.Component {
 
   }
 
-  register(){
-    var http = new XMLHttpRequest();
-    const url = `http://localhost:4321/students/add`;
-    const studentObj = {name: this.state.name, wechat: this.state.wechat, phone: this.state.phone}
-    
+  async register(){
 
-    http.open('POST', url, true);
-    http.setRequestHeader('Content-type', 'application/json');
-    http.onreadystatechange = function() {
-        if(http.readyState == 4 && http.status == 200) {
-            alert(http.responseText);
-        }
-    }
-    http.send(JSON.stringify(studentObj));
+    const url = `http://localhost:4321/students/testAPI2`; 
+    const studentObj = {name: this.state.name, wechat: this.state.wechat, phone: this.state.phone}
+    // axios.post(url,studentObj)
+    //   .then(function (res) {
+    //     console.log(res)/*{this.props.refreshStudentList()}*/
+    //   }) 
+    //   .catch(function(error) {
+    //     console.log(error);
+    //   });
+    fetch(url, {
+      body: JSON.stringify(studentObj),
+      method:'POST',
+      mode:'cors',
+      redirect: 'follow',
+      headers: {
+        'content-type': 'application/json'
+      },
+    })
+    .then(this.props.refreshStudentList())
+    .catch(console.log)
   }
 
   handleInput(event) {
