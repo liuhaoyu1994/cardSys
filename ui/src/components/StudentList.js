@@ -21,13 +21,14 @@ class StudentList extends React.Component {
   emitStudentInfo(obj) {
     this.setState({target:obj}, () => {this.setState({showDetail:true})});
   }
-  
+
   registerStudent() {
     console.log(this.state.showRegisterForm)
     this.setState({showRegisterForm:!this.state.showRegisterForm})
   }
 
   async refreshStudentList() {
+    console.log('list to be refreshed')
     const response = await axios.get('http://localhost:4321/students')
     this.setState({ value: response.data.data })
     this.setState({target:this.state.value[0]}, () => {this.setState({showDetail:true})});
@@ -41,19 +42,20 @@ class StudentList extends React.Component {
     return (
       <div>
         <h1> 学生列表 <button type="button" className="btn btn-outline-success" onClick={this.registerStudent}>注册</button></h1>
-        <div className="col-md-12 ">{this.state.showRegisterForm ? <StudentRegister /> : null}</div>
+        {/* <iframe width="560" height="315" src="https://www.youtube.com/embed/TS0tIAN0FmQ" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe> */}
+        <div className="col-md-12 ">{this.state.showRegisterForm ? <StudentRegister refreshStudentList={this.refreshStudentList}/> : null}</div>
         <div className="container-fluid">
           <div className="row align-items-start">
             <div className="col-md-1"></div>
             <div className="col-md-4 p-0 d-flex flex-wrap justify-content-md-start">
-              {this.state.value.map((item,key) => 
+              {this.state.value.map((item,key) =>
                 <div className="col-md-4 p-0"><StudentItem item={item} key={item.id} emitEvent={this.emitStudentInfo} /></div>
               )}
             </div>
             <div className="col-md-6 ">{this.state.showDetail ? <StudentPopup item={this.state.target} refreshStudentList={this.refreshStudentList}/> : null}</div>
           </div>
         </div>
-        
+
       </div>
     );
   }
