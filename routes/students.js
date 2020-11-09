@@ -4,33 +4,33 @@ var db = require('../db.js');
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
-    var query = 'select * from Student';
-    db.all(query, (err, result) => {
+    var query = 'select * from students;';
+    db.query(query, (err, result) => {
         if (err) {
             res.status(400).json({'err': err});
         } else {
-            res.status(200).send({data: result});
+            res.status(200).send({data: result.rows});
         }
     }) 
 });
 
 router.get('/:id', function(req, res, next) {
-    var query = 'select * from Student where id = ?';
-    db.get(query,[req.params.id], (err, result) => {
+    var query = 'select * from students where id = ?;';
+    db.query(query,[req.params.id], (err, result) => {
         if (err) {
             res.status(400).json({'err': err});
         } else {
-            res.status(200).send({data: result});
+            res.status(200).send({data: result.rows});
         }
     })
     
 });
 
 router.post('/add', function(req, res, next) {
-    var query = 'insert into Student (name, points, wechat, phone) values (?,?,?,?)';
+    var query = 'insert into students (name, points, wechat, phone) values (?,?,?,?);';
     var params = [req.body.name, 0, req.body.wechat, req.body.phone];
     console.log("req: " + params);
-    db.run(query, params,(err, result) => {
+    db.query(query, params,(err, result) => {
         if (err) {
             res.status(400).json({'err': err});
         } else {
@@ -40,9 +40,9 @@ router.post('/add', function(req, res, next) {
 });
 
 router.put('/:id', function(req, res, next) {
-    var query = 'update Student set name=?, points=?, wechat=?, phone=? where id=?';
+    var query = 'update students set name=?, points=?, wechat=?, phone=? where id=?;';
     var params = [req.body.name, req.body.points, req.body.wechat, req.body.phone, req.params.id];
-    db.run(query, params,(err, result) => {
+    db.query(query, params,(err, result) => {
         if (err) {
             res.status(400).json({'err': err});
         } else {
@@ -53,10 +53,10 @@ router.put('/:id', function(req, res, next) {
 
 
 router.delete('/:id', function(req, res, next) {
-    var query = 'delete from Student where id=?';
+    var query = 'delete from students where id=?;';
     var params = [req.params.id];
     console.log(req.params)
-    db.run(query, params,(err, result) => {
+    db.query(query, params,(err, result) => {
         if (err) {
             res.status(400).json({'err': err});
         } else {
