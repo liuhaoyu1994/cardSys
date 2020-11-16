@@ -24,4 +24,42 @@ const db = new Client({
 })
 db.connect()
 
+var query = 'CREATE TABLE IF NOT EXISTS students (id SERIAL PRIMARY KEY, name CHAR(30), wechat CHAR(30), phone CHAR(30), points SMALLINT);';
+db.query(query,(err, result) => {
+    if (err) {
+        console.log('err creating students table', err);
+    } else {
+        console.log('students table running');
+    }
+}) 
+
+var query = 'CREATE TABLE IF NOT EXISTS images (id SERIAL PRIMARY KEY, path CHAR(30), studentid INT, CONSTRAINT student FOREIGN KEY(studentid) REFERENCES students(id) ON DELETE CASCADE);';
+db.query(query,(err, result) => {
+    if (err) {
+        console.log('err creating images table', err);
+    } else {
+        console.log('images table running');
+    }
+}) 
+
+var query = 'CREATE TABLE IF NOT EXISTS cards (id SERIAL PRIMARY KEY, type SMALLINT, credit SMALLINT, expire TIMESTAMP, studentid INT, CONSTRAINT student FOREIGN KEY(studentid) REFERENCES students(id) ON DELETE CASCADE);';
+db.query(query,(err, result) => {
+    if (err) {
+        console.log('err creating cards table', err);
+    } else {
+        console.log('cards table running');
+    }
+}) 
+
+var query = 'CREATE TABLE IF NOT EXISTS records (id SERIAL PRIMARY KEY, type SMALLINT, date TIMESTAMP, cardid INT, CONSTRAINT card FOREIGN KEY(cardid) REFERENCES cards(id) ON DELETE CASCADE);';
+db.query(query,(err, result) => {
+    if (err) {
+        console.log('err creating records table', err);
+    } else {
+        console.log('records table running');
+    }
+}) 
+
+
+
 module.exports = db;

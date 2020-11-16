@@ -17,7 +17,7 @@ class StudentRegister extends React.Component {
 
   async register(){
 
-    const url = `http://localhost:4321/students/testAPI2`; 
+    const url = `http://localhost:4321/students/register`; 
     const studentObj = {name: this.state.name, wechat: this.state.wechat, phone: this.state.phone}
     // axios.post(url,studentObj)
     //   .then(function (res) {
@@ -50,7 +50,8 @@ class StudentRegister extends React.Component {
     return (
       <div>
         <div className = "card p-2">
-          <img className="card-img-top m-auto" src="thumb.jpg" style={{maxWidth: 150 + 'px'}} alt="photo"></img>
+          {/* <img className="card-img-top m-auto" src="thumb.jpg" style={{maxWidth: 150 + 'px'}} alt="photo"></img> */}
+          
           <div className="card-body">
             姓名:<input type="text" name="name" value={this.state.name} onChange={this.handleInput} />
             微信名:<input type="text" name="wechat" value={this.state.wechat} onChange={this.handleInput} />

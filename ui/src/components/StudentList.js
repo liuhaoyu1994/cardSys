@@ -8,18 +8,44 @@ class StudentList extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      value: [],
+      students: [],
       target: {},
       showDetail: false,
       showRegisterForm: false
     };
-    this.emitStudentInfo = this.emitStudentInfo.bind(this);
+    this.displayStudentDetail = this.displayStudentDetail.bind(this);
     this.refreshStudentList = this.refreshStudentList.bind(this);
     this.registerStudent = this.registerStudent.bind(this);
+    this.getStudentImage = this.getStudentImage.bind(this);
   }
 
-  emitStudentInfo(obj) {
-    this.setState({target:obj}, () => {this.setState({showDetail:true})});
+  displayStudentDetail(obj) {
+    this.setState({target:obj}, () => {this.getStudentImage(); this.setState({showDetail:true})});
+  }
+
+  getStudentImage() {
+    // const studentId = this.state.target.id
+    // const url = `http://localhost:4321/students/${studentId}/image`; 
+    // var res = fetch(url).then((response) => {
+    //   const reader = response.body.getReader();
+    //   const stream = new ReadableStream({
+    //     start(controller) {
+    //       function push() {
+    //         reader.read().then(({ done, value }) => {
+    //           if (done) {
+    //             controller.close();
+    //             return;
+    //           }
+    //           controller.enqueue(value);
+    //           push();
+    //         });
+    //       };
+    //       push();
+    //     }
+    //   });
+    //   return new Response(stream, { headers: { "Content-Type": "image/png" } });
+    // });
+    // console.log(res)
   }
 
   registerStudent() {
@@ -29,9 +55,13 @@ class StudentList extends React.Component {
 
   async refreshStudentList() {
     console.log('list to be refreshed')
-    const response = await axios.get('http://localhost:4321/students')
-    this.setState({ value: response.data.data })
-    this.setState({target:this.state.value[0]}, () => {this.setState({showDetail:true})});
+    await fetch('http://localhost:4321/students')
+    .then(res => res.json())
+    .then((data) => {
+      console.log(data)
+      this.setState({ students: data.data });
+      this.setState({target:this.state.students[0]}, () => {this.setState({showDetail:true})});
+    })    
   }
 
   async componentDidMount() {
@@ -47,12 +77,12 @@ class StudentList extends React.Component {
         <div className="container-fluid">
           <div className="row align-items-start">
             <div className="col-md-1"></div>
-            <div className="col-md-4 p-0 d-flex flex-wrap justify-content-md-start">
-              {this.state.value.map((item,key) =>
-                <div className="col-md-4 p-0"><StudentItem item={item} key={item.id} emitEvent={this.emitStudentInfo} /></div>
+            <div className="col-md-5 p-0 d-flex flex-wrap justify-content-md-start">
+              {this.state.students.map((item,key) =>
+                <div className="col-md-3 p-0"><StudentItem item={item} key={item.id} emitEvent={this.displayStudentDetail} /></div>
               )}
             </div>
-            <div className="col-md-6 ">{this.state.showDetail ? <StudentPopup item={this.state.target} refreshStudentList={this.refreshStudentList}/> : null}</div>
+            <div className="col-md-5 ">{this.state.showDetail ? <StudentPopup item={this.state.target} refreshStudentList={this.refreshStudentList}/> : null}</div>
           </div>
         </div>
 
