@@ -35,7 +35,7 @@ class StudentRegister extends React.Component {
         'content-type': 'application/json'
       },
     })
-    .then(this.props.refreshStudentList())
+    .then(() => {this.props.refreshStudentList()})
     .catch(console.log)
   }
 

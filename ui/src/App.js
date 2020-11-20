@@ -1,7 +1,7 @@
 import React from 'react';
 import logo from './logo.svg';
 import StudentList from './components/StudentList'
-import CardList from './components/CardList'
+import NewCardType from './components/NewCardType'
 import Login from './components/Login'
 import {
   BrowserRouter as Router,
@@ -27,7 +27,7 @@ class App extends React.Component {
               <StudentList />
             </Route>
             <Route path="/cards">
-              <CardList />
+              <NewCardType />
             </Route>
           </Switch>
           

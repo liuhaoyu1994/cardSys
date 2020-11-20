@@ -53,9 +53,9 @@ class StudentList extends React.Component {
     this.setState({showRegisterForm:!this.state.showRegisterForm})
   }
 
-  async refreshStudentList() {
+  refreshStudentList() {
     console.log('list to be refreshed')
-    await fetch('http://localhost:4321/students')
+    fetch('http://localhost:4321/students')
     .then(res => res.json())
     .then((data) => {
       console.log(data)

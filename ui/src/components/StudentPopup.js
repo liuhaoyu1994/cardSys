@@ -5,18 +5,17 @@ class StudentPopup extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      cards: [],
       cardInfo:'a',
       selectedFile: null,
       updateImage: false,
       uploadedImage:'',
-      showBuyCardDetail:false
+      showCards:false
     };
     this.deactivateStudent = this.deactivateStudent.bind(this);
     this.uploadImage = this.uploadImage.bind(this);
     this.switchImageUploadForm = this.switchImageUploadForm.bind(this);
     this.onChangeHandler = this.onChangeHandler.bind(this);
-    this.getCards = this.getCards.bind(this);
+    this.showCardList = this.showCardList.bind(this);
   }
 
   uploadImage(file){
@@ -32,11 +31,9 @@ class StudentPopup extends React.Component {
       headers: {
         'content-type': 'application/json'
       },
-    }).then(
-      response => response.json() // if the response is a JSON object
-    ).then(
-      success => console.log(success) // Handle the success response object
-    ).catch(
+    }).then(() =>{
+      this.props.refreshStudentList()
+    }).catch(
       error => console.log(error) // Handle the error response object
     );
   }
@@ -55,25 +52,15 @@ class StudentPopup extends React.Component {
     
   }
 
-  getCards() {
-    const url = `http://localhost:4321/students/${this.props.item.id}/cards`;  
-    fetch(url)
-    .then(res => res.json())
-    .then(data => {
-      console.log(data.data.rows)
-      this.setState({
-        cards: data.data.rows
-      })
-    })
-    .then(
-      this.setState ({
-        showBuyCardDetail: !this.state.showBuyCardDetail
-      })
-    )
 
-    .catch(console.log)
+  showCardList() {
+    this.setState ({
+      showCards: !this.state.showCards
+    })
   }
 
+
+  
   deactivateStudent() {
     const url = `http://localhost:4321/students/${this.props.item.id}`;  
     fetch(url, {
@@ -83,7 +70,7 @@ class StudentPopup extends React.Component {
         'content-type': 'application/json'
       },
     })
-    .then(this.props.refreshStudentList())
+    .then(() => {this.props.refreshStudentList()})
     .catch(console.log)
   }
 
@@ -128,12 +115,12 @@ class StudentPopup extends React.Component {
         <div className="col-md-12">
         <div>
           </div>
-          <button type="button" className="btn btn-outline-success col-md-5 mr-1" onClick={this.getCards}>卡片列表</button>
+          <button type="button" className="btn btn-outline-success col-md-5 mr-1" onClick={this.showCardList}>卡片列表</button>
           {/* <button type="button" className="btn btn-outline-success col-md-5 mr-1" onClick={this.showBuyCard}>买课</button> */}
           <button type="button" className="btn btn-outline-danger col-md-5" onClick={this.deactivateStudent}>删除</button>
         </div>
         <div className="container">
-          {this.state.showBuyCardDetail ? <CardList cards={this.state.cards}></CardList>:null}
+          {this.state.showCards ? <CardList studentId={this.props.item.id}></CardList>:null}
         </div>
       </div>
     }

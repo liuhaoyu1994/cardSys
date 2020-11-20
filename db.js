@@ -42,7 +42,16 @@ db.query(query,(err, result) => {
     }
 }) 
 
-var query = 'CREATE TABLE IF NOT EXISTS cards (id SERIAL PRIMARY KEY, type SMALLINT, credit SMALLINT, expire TIMESTAMP, studentid INT, CONSTRAINT student FOREIGN KEY(studentid) REFERENCES students(id) ON DELETE CASCADE);';
+var query = 'CREATE TABLE IF NOT EXISTS cardtypes (id SERIAL PRIMARY KEY, type SERIAL, typename CHAR(30));';
+db.query(query,(err, result) => {
+    if (err) {
+        console.log('err creating cardtypes table', err);
+    } else {
+        console.log('cardtypes table running');
+    }
+}) 
+
+var query = 'CREATE TABLE IF NOT EXISTS cards (id SERIAL PRIMARY KEY, type INT, credit SMALLINT, expire TIMESTAMP, studentid INT, CONSTRAINT student FOREIGN KEY(studentid) REFERENCES students(id) ON DELETE CASCADE, CONSTRAINT cardtype FOREIGN KEY(type) REFERENCES cardtypes(id) ON DELETE CASCADE);';
 db.query(query,(err, result) => {
     if (err) {
         console.log('err creating cards table', err);
@@ -51,7 +60,7 @@ db.query(query,(err, result) => {
     }
 }) 
 
-var query = 'CREATE TABLE IF NOT EXISTS records (id SERIAL PRIMARY KEY, type SMALLINT, date TIMESTAMP, cardid INT, CONSTRAINT card FOREIGN KEY(cardid) REFERENCES cards(id) ON DELETE CASCADE);';
+var query = 'CREATE TABLE IF NOT EXISTS records (id SERIAL PRIMARY KEY, date TIMESTAMP, cardid INT, courseid INT, CONSTRAINT card FOREIGN KEY(cardid) REFERENCES cards(id) ON DELETE CASCADE, CONSTRAINT course FOREIGN KEY(courseid) REFERENCES courses(id) ON DELETE CASCADE);';
 db.query(query,(err, result) => {
     if (err) {
         console.log('err creating records table', err);
@@ -59,6 +68,35 @@ db.query(query,(err, result) => {
         console.log('records table running');
     }
 }) 
+
+var query = 'CREATE TABLE IF NOT EXISTS courses (id SERIAL PRIMARY KEY, name CHAR(30), schedule CHAR(10), startdate TIMESTAMP, enddate TIMESTAMP, teacher CHAR(30), location CHAR(30));'
+db.query(query,(err, result) => {
+    if (err) {
+        console.log('err creating courses table', err);
+    } else {
+        console.log('courses table running');
+    }
+}) 
+
+var query = 'CREATE TABLE IF NOT EXISTS courseimages (id SERIAL PRIMARY KEY, path CHAR(30), courseid INT, CONSTRAINT course FOREIGN KEY(courseid) REFERENCES courses(id) ON DELETE CASCADE);';
+db.query(query,(err, result) => {
+    if (err) {
+        console.log('err creating courseimages table', err);
+    } else {
+        console.log('courseimages table running');
+    }
+}) 
+
+var query = 'CREATE TABLE IF NOT EXISTS coursevideos (id SERIAL PRIMARY KEY, link CHAR(120), courseid INT, CONSTRAINT course FOREIGN KEY(courseid) REFERENCES courses(id) ON DELETE CASCADE);';
+db.query(query,(err, result) => {
+    if (err) {
+        console.log('err creating coursevideos table', err);
+    } else {
+        console.log('coursevideos table running');
+    }
+}) 
+
+
 
 
 
