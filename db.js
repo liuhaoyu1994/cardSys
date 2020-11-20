@@ -51,7 +51,7 @@ db.query(query,(err, result) => {
     }
 }) 
 
-var query = 'CREATE TABLE IF NOT EXISTS cards (id SERIAL PRIMARY KEY, type INT, credit SMALLINT, expire TIMESTAMP, studentid INT, CONSTRAINT student FOREIGN KEY(studentid) REFERENCES students(id) ON DELETE CASCADE, CONSTRAINT cardtype FOREIGN KEY(type) REFERENCES cardtypes(id) ON DELETE CASCADE);';
+var query = 'CREATE TABLE IF NOT EXISTS cards (id SERIAL PRIMARY KEY, cardtypeid INT, credit SMALLINT, expire TIMESTAMP, studentid INT, CONSTRAINT student FOREIGN KEY(studentid) REFERENCES students(id) ON DELETE CASCADE, CONSTRAINT cardtype FOREIGN KEY(cardtypeid) REFERENCES cardtypes(id) ON DELETE CASCADE);';
 db.query(query,(err, result) => {
     if (err) {
         console.log('err creating cards table', err);
@@ -96,8 +96,57 @@ db.query(query,(err, result) => {
     }
 }) 
 
+var query = 'ALTER TABLE courses ADD COLUMN typeid INT;';
+db.query(query,(err, result) => {
+    if (err) {
+        if (err.code === '42701') {
+            console.log('typeid column already exists');
+        } else {
+            console.log(err);
+        }
+    } else {
+        console.log('typeid column created');
+    }
+}) 
 
+var query = 'ALTER TABLE courses ADD CONSTRAINT type FOREIGN KEY (typeid) REFERENCES cardtypes(id) ON DELETE CASCADE;';
+db.query(query,(err, result) => {
+    if (err) {
+        if (err.code === '42710') {
+            console.log('courses mapping already exists');
+        } else {
+            console.log(err);
+        }
+    } else {
+        console.log('courses mapping created');
+    }
+})
 
+var query = 'ALTER TABLE courses ADD COLUMN starttime SMALLINT;';
+db.query(query,(err, result) => {
+    if (err) {
+        if (err.code === '42701') {
+            console.log('starttime column already exists');
+        } else {
+            console.log(err);
+        }
+    } else {
+        console.log('starttime column created');
+    }
+}) 
+
+var query = 'ALTER TABLE courses ADD COLUMN length SMALLINT;';
+db.query(query,(err, result) => {
+    if (err) {
+        if (err.code === '42701') {
+            console.log('length column already exists');
+        } else {
+            console.log(err);
+        }
+    } else {
+        console.log('length column created');
+    }
+}) 
 
 
 module.exports = db;

@@ -8,12 +8,12 @@ class CardList extends React.Component {
     let today = new Date();
     today = String(today.getFullYear() + 1) + '-' + String(today.getMonth() + 1) + '-' + String(today.getDate())
     this.state = {
-      type: undefined,
+      cardtypeid: undefined,
       credit: 10,
       expire: today,
       showBuyCardForm: false,
       cards: [],
-      types: []
+      types: undefined
     };
     this.handleInput = this.handleInput.bind(this);
     this.buyCard = this.buyCard.bind(this);
@@ -30,8 +30,14 @@ class CardList extends React.Component {
     fetch(typeUrl)
     .then(res => res.json())
     .then(data => {
+      let typeDict = {}
+      for (let item in data.data.rows){
+        typeDict.set(item.id,data.data.rows[item.typename])
+      }
+      console.log('aaaaaa',typeDict)
       this.setState({
-        types: data.data.rows
+          cardtypeid: data.data.rows[0].id,
+          types:typeDict
       })
     })
     .catch(err => console.log(err))  
@@ -63,10 +69,9 @@ class CardList extends React.Component {
 
   buyCard(){
     const url = `http://localhost:4321/cards/add`
-    console.log(this.props.studentId)
     const cardObj = {
       studentId:this.props.studentId,
-      type:this.state.type,
+      cardtypeid:this.state.cardtypeid,
       credit:this.state.credit,
       expire:this.state.expire,
     };
@@ -94,18 +99,18 @@ class CardList extends React.Component {
       <div className="card-body">
         <div className="form-group">
           <label>类型:</label>
-          <select className="form-control" name="type" id="select1" value={this.state.type} onChange={this.handleInput}>
+          <select className="form-control" name="cardtypeid" id="select1" value={this.state.cardtypeid} onChange={this.handleInput}>
             {this.state.types.map((type,key) =>
-              <option value={type.type}>{type.typename}</option>
+              <option value={type.id}>{type.typename}</option>
             )}
           </select>      
           <label>次数:</label>
           <input type="number" className="form-control" name="credit" value={this.state.credit} onChange={this.handleInput} />
           <label>过期:</label>
           <input type="date" className="form-control" name="expire" value={this.state.expire} onChange={this.handleInput} />
-          </div>
-          <button type="button" className="btn btn-outline-success col-md-5 mr-1" onClick={this.buyCard}>提交</button>
         </div>
+        <button type="button" className="btn btn-outline-success col-md-5 mr-1" onClick={this.buyCard}>提交</button>
+      </div>
     </div>
 
     let cardList;

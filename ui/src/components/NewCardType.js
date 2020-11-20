@@ -38,11 +38,11 @@ class NewCardType extends React.Component {
 
     addCardType(){
         const url = `http://localhost:4321/cards/addType`
-        const cardObj = {
+        const typenameObj = {
             typename:this.state.typename,
         };
         fetch(url, {
-          body: JSON.stringify(cardObj),
+          body: JSON.stringify(typenameObj),
           method:'POST',
           mode:'cors',
           redirect: 'follow',

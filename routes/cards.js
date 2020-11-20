@@ -50,8 +50,8 @@ router.get('/:id', function(req, res, next) {
 });
 
 router.post('/add', function(req, res, next) {
-    var query = 'insert into cards (type, credit, expire, studentId) values ($1,$2,$3,$4)';
-    var params = [req.body.type, req.body.credit, req.body.expire, req.body.studentId];
+    var query = 'insert into cards (cardtypeid, credit, expire, studentId) values ($1,$2,$3,$4)';
+    var params = [req.body.cardtypeid, req.body.credit, req.body.expire, req.body.studentId];
     db.query(query, params,(err, result) => {
         if (err) {
             res.status(400).json({'err': err});
