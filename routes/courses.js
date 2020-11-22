@@ -6,7 +6,7 @@ var db = require('../db.js');
 
 /* GET home page. */
 router.get('/list', function(req, res, next) {
-    var query = 'select * from courses;';
+    var query = 'select courses.*, cardtypes.typename from courses join cardtypes on courses.typeid = cardtypes.id;';
     db.query(query, (err, result) => {
         if (err) {
             res.status(400).json({'err': err});
@@ -20,7 +20,7 @@ router.get('/list', function(req, res, next) {
 
 router.get('/:id', function(req, res, next) {
     // var query = 'select Student.*,Card.* from Card left join Student on Student.id = Card.studentId where Card.id = ?';
-    var query = 'select * from courses where id = $1';
+    var query = 'select courses.*, cardtypes.typename from courses join cardtypes on courses.typeid = cardtypes.id where courses.id = $1;';
     db.query(query,[req.params.id], (err, result) => {
         if (err) {
             res.status(400).json({'err': err});

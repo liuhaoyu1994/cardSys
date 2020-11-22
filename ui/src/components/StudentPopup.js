@@ -95,10 +95,8 @@ class StudentPopup extends React.Component {
     </div>
     let content;
     if (typeof(this.props.item) == 'undefined') {
-      console.log(typeof(this.props.item))
       content = <span>没有学生信息！</span>
     } else {
-      console.log(typeof(this.props.item))
       content = 
       <div className = "card p-2">
         <img className="card-img-top m-auto" src={`http://localhost:4321/students/${this.props.item.id}/image`} style={{maxWidth: 150 + 'px'}} alt="photo"></img>

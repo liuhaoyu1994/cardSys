@@ -122,7 +122,7 @@ db.query(query,(err, result) => {
     }
 })
 
-var query = 'ALTER TABLE courses ADD COLUMN starttime SMALLINT;';
+var query = 'ALTER TABLE courses ADD COLUMN starttime CHAR(30);';
 db.query(query,(err, result) => {
     if (err) {
         if (err.code === '42701') {

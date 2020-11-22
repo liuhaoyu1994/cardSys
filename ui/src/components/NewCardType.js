@@ -50,7 +50,7 @@ class NewCardType extends React.Component {
             'content-type': 'application/json'
           },
         }).then(() => {this.getCardTypes()})
-      }
+    }
       
 
     render() {

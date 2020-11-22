@@ -11,6 +11,7 @@ var authRouter = require('./routes/auth');
 var usersRouter = require('./routes/users');
 var cardsRouter = require('./routes/cards');
 var studentsRouter = require('./routes/students');
+var coursesRouter = require('./routes/courses');
 var fileuploadRouter = require('./routes/fileupload');
 
 
@@ -37,6 +38,7 @@ app.use('/auth', authRouter);
 app.use('/students', studentsRouter);
 app.use('/users', usersRouter);
 app.use('/cards', cardsRouter);
+app.use('/courses', coursesRouter);
 app.use('/fileupload', fileuploadRouter);
 
 // catch 404 and forward to error handler

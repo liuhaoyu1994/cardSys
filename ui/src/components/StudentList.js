@@ -79,7 +79,7 @@ class StudentList extends React.Component {
             <div className="col-md-1"></div>
             <div className="col-md-5 p-0 d-flex flex-wrap justify-content-md-start">
               {this.state.students.map((item,key) =>
-                <div className="col-md-3 p-0"><StudentItem item={item} key={item.id} emitEvent={this.displayStudentDetail} /></div>
+                <div className="col-md-3 p-0" key={item.id}><StudentItem item={item}  emitEvent={this.displayStudentDetail} /></div>
               )}
             </div>
             <div className="col-md-5 ">{this.state.showDetail ? <StudentPopup item={this.state.target} refreshStudentList={this.refreshStudentList}/> : null}</div>

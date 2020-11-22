@@ -1,6 +1,6 @@
 import React from 'react';
 import CardItem from './CardItem'
-
+import CardTypeSelection from './CardTypeSelection'
 
 class CardList extends React.Component {
   constructor(props) {
@@ -13,31 +13,41 @@ class CardList extends React.Component {
       expire: today,
       showBuyCardForm: false,
       cards: [],
-      types: undefined
+      types: undefined,
+      typesDict: undefined
     };
     this.handleInput = this.handleInput.bind(this);
     this.buyCard = this.buyCard.bind(this);
     this.switchshowBuyCardForm = this.switchshowBuyCardForm.bind(this);    
-    this.getCards = this.getCards.bind(this);  
+    this.getCards = this.getCards.bind(this);
+    this.updateCardType = this.updateCardType.bind(this);
+
   }
+
+  componentDidUpdate(prevProps){
+    if (this.props.studentId !== prevProps.studentId) {
+      this.getCards();
+    }
+
+  }
+
   componentDidMount() {
     this.getCards();
   }
   
-
   getCards() {
     const typeUrl = `http://localhost:4321/cards/types`;
     fetch(typeUrl)
     .then(res => res.json())
     .then(data => {
-      let typeDict = {}
-      for (let item in data.data.rows){
-        typeDict.set(item.id,data.data.rows[item.typename])
-      }
-      console.log('aaaaaa',typeDict)
+      let tempDict = {}
+      data.data.rows.forEach(item => {
+        tempDict[item.id] = item.typename.trim()
+      })
       this.setState({
           cardtypeid: data.data.rows[0].id,
-          types:typeDict
+          types:data.data.rows,
+          typesDict:tempDict
       })
     })
     .catch(err => console.log(err))  
@@ -66,6 +76,12 @@ class CardList extends React.Component {
     })
   }
 
+  updateCardType(id) {
+    this.setState ({
+      cardtypeid: id
+    })
+  }
+
 
   buyCard(){
     const url = `http://localhost:4321/cards/add`
@@ -86,24 +102,19 @@ class CardList extends React.Component {
     }).then(() => {this.switchshowBuyCardForm(); this.getCards()})
   }
 
-
-
   render() {
     const mystyle = {
       backgroundColor: "#f0a8af",
       borderRadius:"10px",
       padding:"1em"
     };
+    
     const buyCardForm = 
     <div className = "card p-2">          
       <div className="card-body">
         <div className="form-group">
           <label>类型:</label>
-          <select className="form-control" name="cardtypeid" id="select1" value={this.state.cardtypeid} onChange={this.handleInput}>
-            {this.state.types.map((type,key) =>
-              <option value={type.id}>{type.typename}</option>
-            )}
-          </select>      
+          <CardTypeSelection types={this.state.types} emitTypeId={this.updateCardType}></CardTypeSelection>
           <label>次数:</label>
           <input type="number" className="form-control" name="credit" value={this.state.credit} onChange={this.handleInput} />
           <label>过期:</label>
@@ -118,7 +129,7 @@ class CardList extends React.Component {
       cardList = 
       <div className="col-md-12 p-0 d-flex flex-row align-items-start flex-wrap justify-content-md-start">
         {this.state.cards.map((card,key) =>
-          <div className="col-md-5 p-0 mr-2 mb-2"><CardItem card={card} key={card.id}/></div>
+          <div className="col-md-5 p-0 mr-2 mb-2"  key={card.id}><CardItem refreshCardList={this.getCards} typename={this.state.typesDict[card.cardtypeid]} card={card}/></div>
         )}          
       </div>
     } else {

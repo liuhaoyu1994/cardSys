@@ -2,6 +2,7 @@ import React from 'react';
 import logo from './logo.svg';
 import StudentList from './components/StudentList'
 import NewCardType from './components/NewCardType'
+import CourseList from './components/CourseList'
 import Login from './components/Login'
 import {
   BrowserRouter as Router,
@@ -18,6 +19,7 @@ class App extends React.Component {
       <Router>
         <a href="/students" className="btn btn-outline-success">students</a>
         <a href="/cards" className="btn btn-outline-success">cards</a>
+        <a href="/courses" className="btn btn-outline-success">courses</a>
         <div className="container-fluid">
           <Switch>
             <Route path="/login">
@@ -28,6 +30,9 @@ class App extends React.Component {
             </Route>
             <Route path="/cards">
               <NewCardType />
+            </Route>
+            <Route path="/courses">
+              <CourseList />
             </Route>
           </Switch>
           
