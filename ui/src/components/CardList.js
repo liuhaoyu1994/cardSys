@@ -125,12 +125,12 @@ class CardList extends React.Component {
     </div>
 
     let cardList;
-    if (this.state.cards !== undefined) {
+    if (this.state.cards !== undefined && this.state.typesDict !== undefined) {
       cardList = 
       <div className="col-md-12 p-0 d-flex flex-row align-items-start flex-wrap justify-content-md-start">
         {this.state.cards.map((card,key) =>
-          <div className="col-md-5 p-0 mr-2 mb-2"  key={card.id}><CardItem refreshCardList={this.getCards} typename={this.state.typesDict[card.cardtypeid]} card={card}/></div>
-        )}          
+          <CardItem key={card.id} refreshCardList={this.getCards} typeid={card.cardtypeid} typename={this.state.typesDict[card.cardtypeid]} card={card}/>
+    )}          
       </div>
     } else {
       cardList = <div>no data</div>

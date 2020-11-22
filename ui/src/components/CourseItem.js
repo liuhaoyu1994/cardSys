@@ -3,11 +3,30 @@ import React from 'react';
 class CourseItem extends React.Component {
   constructor(props) {
     super(props);
-    this.deleteCard = this.deleteCard.bind(this);
+    this.state = {
+      date: new Date(),
+    }
+    this.addRecord = this.addRecord.bind(this)
   }
 
-  deleteCard(){
-
+  addRecord(){
+    const url = `http://localhost:4321/records/add`; 
+    let date = new Date()
+    const recordObj = {
+      date : date,
+      cardid : this.props.cardid,
+      courseid : this.props.course.id
+    } 
+    fetch(url, {
+      body: JSON.stringify(recordObj),
+      method:'POST',
+      mode:'cors',
+      headers: {
+        'content-type': 'application/json'
+      },
+    })
+    .then(() => {this.props.successAddRecord()})
+    .catch(console.log)
   }
 
   render() {
@@ -51,7 +70,7 @@ class CourseItem extends React.Component {
           <p className="card-text"> 地点: {this.props.course.location}</p>
           <p className="card-text"> 类型: {this.props.course.typename}</p>
         </div>
-        <button type="button" className="btn btn-outline-danger" onClick={this.deleteCard}>删除</button>
+        <button type="button" className="btn btn-outline-success col-md-5 mr-1" onClick={this.addRecord}>提交</button>
       </div>
     );
   }

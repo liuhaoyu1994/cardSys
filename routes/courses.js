@@ -18,6 +18,27 @@ router.get('/list', function(req, res, next) {
     })
 });
 
+router.get('/category', function(req, res, next) {
+    let query,params;
+    if (req.query.typeid == 'all') {
+        query = 'select courses.*, cardtypes.typename from courses join cardtypes on courses.typeid = cardtypes.id;';
+        params = null
+    } else {
+        query = 'select courses.*, cardtypes.typename from courses join cardtypes on courses.typeid = cardtypes.id where courses.typeid = $1;';
+        params = [req.query.typeid]
+    }
+    db.query(query,params, (err, result) => {
+        if (err) {
+            console.log(err)
+            res.status(400).json({'err': err});
+            res.end();
+        } else {
+            res.status(200).send({data: result});
+            res.end();
+        }
+    })
+});
+
 router.get('/:id', function(req, res, next) {
     // var query = 'select Student.*,Card.* from Card left join Student on Student.id = Card.studentId where Card.id = ?';
     var query = 'select courses.*, cardtypes.typename from courses join cardtypes on courses.typeid = cardtypes.id where courses.id = $1;';

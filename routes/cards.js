@@ -49,6 +49,20 @@ router.get('/:id', function(req, res, next) {
     })
 });
 
+router.get('/:id/records', function(req, res, next) {
+    // var query = 'select Student.*,Card.* from Card left join Student on Student.id = Card.studentId where Card.id = ?';
+    var query = 'select * from records join courses on records.courseid = courses.id where records.cardid = $1';
+    db.query(query,[req.params.id], (err, result) => {
+        if (err) {
+            res.status(400).json({'err': err});
+            res.end();
+        } else {
+            res.status(200).send({data: result});
+            res.end();
+        }
+    })
+});
+
 router.post('/add', function(req, res, next) {
     var query = 'insert into cards (cardtypeid, credit, expire, studentId) values ($1,$2,$3,$4)';
     var params = [req.body.cardtypeid, req.body.credit, req.body.expire, req.body.studentId];

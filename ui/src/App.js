@@ -2,6 +2,7 @@ import React from 'react';
 import logo from './logo.svg';
 import StudentList from './components/StudentList'
 import NewCardType from './components/NewCardType'
+import NewCourse from './components/NewCourse'
 import CourseList from './components/CourseList'
 import Login from './components/Login'
 import {
@@ -32,6 +33,7 @@ class App extends React.Component {
               <NewCardType />
             </Route>
             <Route path="/courses">
+              <NewCourse />
               <CourseList />
             </Route>
           </Switch>

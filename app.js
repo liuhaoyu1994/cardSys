@@ -12,6 +12,7 @@ var usersRouter = require('./routes/users');
 var cardsRouter = require('./routes/cards');
 var studentsRouter = require('./routes/students');
 var coursesRouter = require('./routes/courses');
+var recordsRouter = require('./routes/records');
 var fileuploadRouter = require('./routes/fileupload');
 
 
@@ -40,6 +41,9 @@ app.use('/users', usersRouter);
 app.use('/cards', cardsRouter);
 app.use('/courses', coursesRouter);
 app.use('/fileupload', fileuploadRouter);
+app.use('/records', recordsRouter);
+
+
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

@@ -58,7 +58,6 @@ class StudentList extends React.Component {
     fetch('http://localhost:4321/students')
     .then(res => res.json())
     .then((data) => {
-      console.log(data)
       this.setState({ students: data.data });
       this.setState({target:this.state.students[0]}, () => {this.setState({showDetail:true})});
     })    
