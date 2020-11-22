@@ -10,7 +10,7 @@ class CourseItem extends React.Component {
   }
 
   addRecord(){
-    const url = `http://localhost:4321/records/add`; 
+    const url = `/api/records/add`; 
     let date = new Date()
     const recordObj = {
       date : date,

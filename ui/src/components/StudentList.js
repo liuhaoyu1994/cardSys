@@ -25,7 +25,7 @@ class StudentList extends React.Component {
 
   getStudentImage() {
     // const studentId = this.state.target.id
-    // const url = `http://localhost:4321/students/${studentId}/image`; 
+    // const url = `/students/${studentId}/image`; 
     // var res = fetch(url).then((response) => {
     //   const reader = response.body.getReader();
     //   const stream = new ReadableStream({
@@ -55,9 +55,10 @@ class StudentList extends React.Component {
 
   refreshStudentList() {
     console.log('list to be refreshed')
-    fetch('http://localhost:4321/students')
+    fetch('/api/students')
     .then(res => res.json())
     .then((data) => {
+      console.log(data.data)
       this.setState({ students: data.data });
       this.setState({target:this.state.students[0]}, () => {this.setState({showDetail:true})});
     })    

@@ -15,8 +15,6 @@ var coursesRouter = require('./routes/courses');
 var recordsRouter = require('./routes/records');
 var fileuploadRouter = require('./routes/fileupload');
 
-
-
 var app = express();
 
 // view engine setup
@@ -32,16 +30,17 @@ app.use(logger('dev'));
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(cookieParser());
-app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.static(path.join(__dirname, 'ui/build')));
 
 app.use(cors());
-app.use('/auth', authRouter);
-app.use('/students', studentsRouter);
-app.use('/users', usersRouter);
-app.use('/cards', cardsRouter);
-app.use('/courses', coursesRouter);
-app.use('/fileupload', fileuploadRouter);
-app.use('/records', recordsRouter);
+
+app.use('/api/auth', authRouter);
+app.use('/api/students', studentsRouter);
+app.use('/api/users', usersRouter);
+app.use('/api/cards', cardsRouter);
+app.use('/api/courses', coursesRouter);
+app.use('/api/fileupload', fileuploadRouter);
+app.use('/api/records', recordsRouter);
 
 
 

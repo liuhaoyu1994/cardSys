@@ -17,7 +17,7 @@ class NewCardType extends React.Component {
     }
 
     getCardTypes() {
-        const typeUrl = `http://localhost:4321/cards/types`;
+        const typeUrl = `/api/cards/types`;
         fetch(typeUrl)
         .then(res => res.json())
         .then(data => {
@@ -37,7 +37,7 @@ class NewCardType extends React.Component {
     }
 
     addCardType(){
-        const url = `http://localhost:4321/cards/addType`
+        const url = `/api/cards/addType`
         const typenameObj = {
             typename:this.state.typename,
         };

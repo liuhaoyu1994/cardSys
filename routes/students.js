@@ -3,9 +3,9 @@ var router = express.Router();
 var db = require('../db.js');
 var fs = require('fs');
 
-
 /* GET home page. */
 router.get('/', function(req, res, next) {
+    console.log('aaa')
     var query = 'select * from students;';
     db.query(query, (err, result) => {
         if (err) {

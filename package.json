@@ -3,6 +3,8 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
+    "dev": "nodemon node ./bin/www",
+    "build": "cd ui && npm install && npm run build",
     "start": "node ./bin/www"
   },
   "dependencies": {

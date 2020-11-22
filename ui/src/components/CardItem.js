@@ -15,7 +15,7 @@ class CardItem extends React.Component {
   }
 
   deleteCard(){
-    const url = `http://localhost:4321/cards/${this.props.card.id}`;  
+    const url = `/api/cards/${this.props.card.id}`;  
     fetch(url, {
       method:'DELETE',
       mode:'cors',

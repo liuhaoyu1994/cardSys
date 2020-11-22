@@ -34,7 +34,7 @@ class CourseList extends React.Component {
     }
 
     getCourses(typeid = 'all') {
-        const typeUrl = `http://localhost:4321/cards/types`;
+        const typeUrl = `/api/cards/types`;
         fetch(typeUrl)
         .then(res => res.json())
         .then(data => {
@@ -50,7 +50,7 @@ class CourseList extends React.Component {
         })
         .catch(err => console.log(err))  
 
-        const courseUrl = `http://localhost:4321/courses/category?typeid=${typeid}`;
+        const courseUrl = `/api/courses/category?typeid=${typeid}`;
         fetch(courseUrl)
         .then(res => res.json())
         .then(data => {
@@ -62,7 +62,7 @@ class CourseList extends React.Component {
     }
 
     addCourse(){
-        const url = `http://localhost:4321/courses/add`
+        const url = `/api/courses/add`
         let schedule = '';
         for (const [key, value] of Object.entries(this.state.schedule)) {
             if(value){

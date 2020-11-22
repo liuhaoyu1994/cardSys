@@ -13,7 +13,7 @@ class Login extends React.Component {
     }
     async login (){
 
-        const url = `http://localhost:4321/auth`; 
+        const url = `/api/auth`; 
         const authInfo = {email: this.state.email, password: this.state.password}
         // axios.post(url,studentObj)
         //   .then(function (res) {

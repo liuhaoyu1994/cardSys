@@ -17,7 +17,7 @@ class StudentRegister extends React.Component {
 
   async register(){
 
-    const url = `http://localhost:4321/students/register`; 
+    const url = `http://localhost:4321/api/students/register`; 
     const studentObj = {name: this.state.name, wechat: this.state.wechat, phone: this.state.phone}
     // axios.post(url,studentObj)
     //   .then(function (res) {

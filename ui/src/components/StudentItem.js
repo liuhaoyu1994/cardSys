@@ -16,7 +16,7 @@ class StudentItem extends React.Component {
     };
     return (
       <div className = "card p-2 m-1" style={{height: '300px'}}>        
-          <img className="card-img-top p-auto m-auto" src={`http://localhost:4321/students/${this.props.item.id}/image`} style={mystyle} alt="photo"></img>
+          <img className="card-img-top p-auto m-auto" src={`/api/students/${this.props.item.id}/image`} style={mystyle} alt="photo"></img>
           <div className="card-body">
             <h5 className="card-title">{this.props.item.name}</h5>
             <p className="card-text"> points: {this.props.item.points}</p>

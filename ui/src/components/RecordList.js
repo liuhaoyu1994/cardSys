@@ -15,7 +15,7 @@ class RecordList extends React.Component {
     }
 
     getRecords() {
-        const recordsUrl = `http://localhost:4321/cards/${this.props.cardid}/records`;
+        const recordsUrl = `/api/cards/${this.props.cardid}/records`;
         fetch(recordsUrl)
         .then(res => res.json())
         .then(data => {

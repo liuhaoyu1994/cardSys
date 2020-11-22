@@ -22,7 +22,7 @@ class StudentPopup extends React.Component {
     const data = new FormData() 
     data.append('userid', this.props.item.id)
     data.append('file', this.state.selectedFile)
-    const url = `http://localhost:4321/fileupload`
+    const url = `/api/fileupload`
     fetch(url, {
       body: data,
       method:'POST',
@@ -62,7 +62,7 @@ class StudentPopup extends React.Component {
 
   
   deactivateStudent() {
-    const url = `http://localhost:4321/students/${this.props.item.id}`;  
+    const url = `/api/students/${this.props.item.id}`;  
     fetch(url, {
       method:'DELETE',
       mode:'cors',
@@ -99,7 +99,7 @@ class StudentPopup extends React.Component {
     } else {
       content = 
       <div className = "card p-2">
-        <img className="card-img-top m-auto" src={`http://localhost:4321/students/${this.props.item.id}/image`} style={{maxWidth: 150 + 'px'}} alt="photo"></img>
+        <img className="card-img-top m-auto" src={`/api/students/${this.props.item.id}/image`} style={{maxWidth: 150 + 'px'}} alt="photo"></img>
         <div style = {this.state.updateImage ? mystyle:null}>
           <button type="button" className={this.state.updateImage ? "btn btn-danger":"btn btn-success"} onClick={this.switchImageUploadForm}>{this.state.updateImage ? 'X':'上传头像'}</button>
           {this.state.updateImage ? uploadForm:null}

@@ -36,7 +36,7 @@ class CardList extends React.Component {
   }
   
   getCards() {
-    const typeUrl = `http://localhost:4321/cards/types`;
+    const typeUrl = `/api/cards/types`;
     fetch(typeUrl)
     .then(res => res.json())
     .then(data => {
@@ -52,7 +52,7 @@ class CardList extends React.Component {
     })
     .catch(err => console.log(err))  
 
-    const url = `http://localhost:4321/students/${this.props.studentId}/cards`;  
+    const url = `/api/students/${this.props.studentId}/cards`;  
     fetch(url)
     .then(res => res.json())
     .then(data => {
@@ -84,7 +84,7 @@ class CardList extends React.Component {
 
 
   buyCard(){
-    const url = `http://localhost:4321/cards/add`
+    const url = `/api/cards/add`
     const cardObj = {
       studentId:this.props.studentId,
       cardtypeid:this.state.cardtypeid,
