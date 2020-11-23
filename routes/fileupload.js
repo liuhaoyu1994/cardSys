@@ -2,7 +2,7 @@ var express = require('express');
 var router = express.Router();
 var db = require('../db.js');
 var http = require('http');
-var fs = require('fs');
+var mv = require('mv');
 var formidable = require('formidable');
 
 router.post('/', function(req, res) {
@@ -13,7 +13,7 @@ router.post('/', function(req, res) {
         var student = fields.userid;
         var newFileName = student + '_avatar.' + files.file.name.split(".")[1];
         var newpath = '..\\Cardsys\\public\\images\\' + newFileName;
-        fs.rename(oldpath, newpath, function (err) {
+        mv(oldpath, newpath, function (err) {
             if (err) {
                 res.status(400).json({'err': err});
                 console.log(err)
