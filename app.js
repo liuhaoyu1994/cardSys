@@ -42,6 +42,11 @@ app.use('/api/courses', coursesRouter);
 app.use('/api/fileupload', fileuploadRouter);
 app.use('/api/records', recordsRouter);
 
+app.get('/*', (req, res) => {
+  console.log('a')
+  res.sendFile(path.join(__dirname+'/ui/build/index.html'));
+});
+
 
 
 // catch 404 and forward to error handler
