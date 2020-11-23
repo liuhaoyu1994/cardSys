@@ -13,15 +13,25 @@
 //             /*else {{db.run('INSERT INTO Card(type, remain, studentId) VALUES(1, 7, 1)')}}*/});
 //     }
 // });
-
-const { Client } = require('pg')
-const db = new Client({
-    user: 'deadmin',
-    host: 'localhost',
-    database: 'dedb',
-    password: 'DEADMINPASSWORD',
-    post:5432
-})
+let db;
+if (process.env.DATABASE_URL) {
+    const { Pool } = require('pg');
+    db = new Pool({
+        connectionString: process.env.DATABASE_URL,
+        ssl: {
+          rejectUnauthorized: false
+        }
+      });
+} else {
+    const { Client } = require('pg')
+    db = new Client({
+        user: 'deadmin',
+        host: 'localhost',
+        database: 'dedb',
+        password: 'DEADMINPASSWORD',
+        post:5432
+    })
+}
 db.connect()
 
 var query = 'CREATE TABLE IF NOT EXISTS students (id SERIAL PRIMARY KEY, name CHAR(30), wechat CHAR(30), phone CHAR(30), points SMALLINT);';
