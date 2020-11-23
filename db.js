@@ -15,8 +15,8 @@
 // });
 let db;
 if (process.env.DATABASE_URL) {
-    const { Pool } = require('pg');
-    db = new Pool({
+    const { Client } = require('pg');
+    db = new Client({
         connectionString: process.env.DATABASE_URL,
         ssl: {
           rejectUnauthorized: false
