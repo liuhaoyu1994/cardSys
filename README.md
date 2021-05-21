@@ -1,4 +1,4 @@
-## Hi, I am Harry [^_^]
+## Hi, I am Harry :blush:
 This is a project I started while I was learning React. I do not have much time to finish this soon, since I have a full time job now.
 
 So, I invite you to contribute this together.
