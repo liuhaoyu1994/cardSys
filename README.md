@@ -1,4 +1,4 @@
-## Hi, I am Harry
+## Hi, I am Harry [^_^]
 This is a project I started while I was learning React. I do not have much time to finish this soon, since I have a full time job now.
 
 So, I invite you to contribute this together.
@@ -19,3 +19,5 @@ DB: ```psql```
 Frontend: ```Reactjs```
 
 You can google how to setup these stuff, or wechat me if you need help
+
+## Always create a new branch of your code, and then make a Pull Request to merge your changes to master
