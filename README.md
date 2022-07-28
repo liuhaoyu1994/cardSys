@@ -8,7 +8,7 @@ This is a project I started while I was learning React. I do not have much time 
 
 So, I invite you to contribute this together.
 
-Since it is now an open source project, it will be open to be used by all people who wants to use it.
+Since it is now an open source project, it will be open to use by everyone who wants to use it.
 
 ## Installation
 
